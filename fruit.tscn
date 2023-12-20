@@ -1,4 +1,4 @@
-[gd_scene load_steps=154 format=3 uid="uid://mkk2omdf4wp0"]
+[gd_scene load_steps=155 format=3 uid="uid://mkk2omdf4wp0"]
 
 [ext_resource type="Texture2D" uid="uid://dsgwbm3dg0l6j" path="res://images/Fruits/Apple.png" id="1_1lsoe"]
 [ext_resource type="Script" path="res://fruit.gd" id="1_l5ova"]
@@ -768,7 +768,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_axu1a")
 }],
-"loop": true,
+"loop": false,
 "name": &"collected",
 "speed": 20.0
 }, {
@@ -1053,6 +1053,32 @@ animations = [{
 "speed": 20.0
 }]
 
+[sub_resource type="SpriteFrames" id="SpriteFrames_mhjo1"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7ebh0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lnwgq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o8lbh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0ny4m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tlkh1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_axu1a")
+}],
+"loop": false,
+"name": &"collected",
+"speed": 20.0
+}]
+
 [node name="Fruit" type="Control"]
 texture_filter = 1
 custom_minimum_size = Vector2(42, 42)
@@ -1068,4 +1094,10 @@ sprite_frames = SubResource("SpriteFrames_rgbf4")
 animation = &"apple"
 offset = Vector2(11, 11)
 
-[connection signal="animation_looped" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_looped"]
+[node name="Collected" type="AnimatedSprite2D" parent="."]
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_mhjo1")
+animation = &"collected"
+offset = Vector2(11, 11)
+
+[connection signal="animation_finished" from="Collected" to="." method="_on_collected_animation_finished"]

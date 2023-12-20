@@ -181,14 +181,6 @@ func blow_up_fruit():
 			local_left_children[i].blow_up() if i < local_left_children.size() and local_left_children[i] != null else null
 			local_right_children[i].blow_up() if i < local_right_children.size() and local_right_children[i] != null else null
 			await get_tree().create_timer(0.1).timeout
-	
-	# re-align animations
-	await get_tree().create_timer(7.0).timeout
-	for node in local_left_children:
-		node.reset_animation() if node != null else null
-	for node in local_right_children:
-		node.reset_animation() if node != null else null
-	
 
 func hide_crocs():
 	if game_won:

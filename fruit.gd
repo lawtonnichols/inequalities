@@ -1,31 +1,33 @@
 extends Control
 
-var original_animation
+var just_played_reverse = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	$AnimatedSprite2D.play()
-	original_animation = $AnimatedSprite2D.get_animation()
+	$AnimatedSprite2D.show()
+	$Collected.stop()
+	$Collected.hide()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass
 
 func blow_up():
-	original_animation = $AnimatedSprite2D.get_animation()
-	$AnimatedSprite2D.play("collected")
+	$AnimatedSprite2D.hide()
+	$Collected.show()
+	$Collected.play()
 
-func _on_animated_sprite_2d_animation_looped():
-	if $AnimatedSprite2D.get_animation() == "collected":
-		$AnimatedSprite2D.hide()
-		await get_tree().create_timer(5.0).timeout
-		if $AnimatedSprite2D.get_animation() != "collected":
-			return
-		$AnimatedSprite2D.play(original_animation)
-		$AnimatedSprite2D.stop()
+func _on_collected_animation_finished():
+	if just_played_reverse:
+		$Collected.hide()
 		$AnimatedSprite2D.show()
-
-func reset_animation():
-	$AnimatedSprite2D.set_frame(0)
-	$AnimatedSprite2D.play(original_animation)
-
+		just_played_reverse = false
+	else:
+		$Collected.hide()
+		await get_tree().create_timer(5.0).timeout
+		just_played_reverse = true
+		$Collected.show()
+		$Collected.play_backwards()
+	
+	
